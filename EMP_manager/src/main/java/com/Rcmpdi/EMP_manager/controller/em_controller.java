@@ -33,11 +33,10 @@ public class em_controller {
 		return"add_emp";
 	}
 	@PostMapping("/register")
-	public String emRegister(@ModelAttribute Employee e, HttpSession session) {
-		
-		service.addEmp(e);
-		session.setAttribute("msg", "Saved Succesfully");
-		return "redirect:/";
+	public String registerEmployee(@ModelAttribute Employee emp, HttpSession session) {
+	    service.addEmp(emp);
+	    session.setAttribute("msg", "Employee details saved successfully!");
+	    return "redirect:/";
 	}
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable int id, Model m) {
@@ -58,5 +57,12 @@ public class em_controller {
 		service.deleteEMp(id);
 		session.setAttribute("msg", "Employee Deleted Succesfully..");
 		return "redirect:/";
+	}
+	@GetMapping("/view/{id}")
+	public String viewDetail(@PathVariable int id, Model m) {
+		Employee e = service.getEMpById(id);
+		m.addAttribute("emp",e);
+		return "views";
+		
 	}
 }
